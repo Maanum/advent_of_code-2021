@@ -30,8 +30,13 @@ defmodule MyScript do
       end
     end
 
-    get_winners(updated_boards, round_number)
-    next_round(remaining_numbers, updated_boards)
+    if length(updated_boards) == 1 do
+      get_winners(updated_boards, round_number)
+      next_round(remaining_numbers, updated_boards)
+    else
+      cleaned = Enum.reject(updated_boards, fn x -> Enum.member?(x, []) end)
+      next_round(remaining_numbers, cleaned)
+    end
   end
 
   def get_winners(boards, number) do
