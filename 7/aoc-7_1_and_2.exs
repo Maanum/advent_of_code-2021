@@ -9,20 +9,22 @@ defmodule MyScript do
 
     range_max = Enum.max(subs)
 
-
     results = for num <- 0..range_max do
-      Enum.map(subs, fn x -> abs(num - x) end)
+      ### PART 1 ###
+      # Enum.map(subs, fn x -> abs(num - x) end)
+      ##############
+
+      ### PART 2 ###
+      Enum.map(subs, fn x ->
+        Enum.to_list(0..abs(num - x))
+        |> Enum.sum
+      end)
+      ##############
       |> Enum.sum
     end
 
-
-
-    # PROCESS
-
     IO.inspect Enum.min(results)
-
   end
-
 end
 
 MyScript.crab_subs
