@@ -6,8 +6,14 @@ defmodule MyScript do
     lantern_list = String.split(input, ",")
     |> Enum.map(fn x -> String.to_integer(x) end)
 
-    # Process
+    # PROCESS
+
+    # Part One
     days_to_process = 80
+
+    # Part Two
+    # days_to_process = 256
+
     process_day(lantern_list, days_to_process)
   end
 
@@ -16,15 +22,29 @@ defmodule MyScript do
   end
 
   def process_day(fish, iter) do
-    fish_advanced = Enum.map(fish, fn x -> x - 1 end)
-    fish_add_new = fish_advanced ++ List.duplicate(8, Enum.count(fish_advanced, fn x -> x == -1 end))
-    fish_reset_old = Enum.map(fish_add_new, fn
-      -1 -> 6
-      other -> other
-    end)
+    IO.puts "Days Left: #{iter}"
+    fish_at_zero = Enum.count(fish, fn x -> x == 0 end)
+    fish_advanced = Stream.reject(fish, fn x -> x == 0 end)
+    |> Enum.map(fn x -> x - 1 end)
 
-    process_day(fish_reset_old, iter - 1)
+    new_fish = [ List.duplicate(6, fish_at_zero) | [ List.duplicate(8, fish_at_zero) | fish_advanced ]]
+    |> List.flatten()
+
+    process_day(new_fish, iter - 1)
   end
+
+    def process_day(fish, iter) do
+    IO.puts "Days Left: #{iter}"
+    fish_at_zero = Enum.count(fish, fn x -> x == 0 end)
+    fish_advanced = Stream.reject(fish, fn x -> x == 0 end)
+    |> Enum.map(fn x -> x - 1 end)
+
+    new_fish = [ List.duplicate(6, fish_at_zero) | [ List.duplicate(8, fish_at_zero) | fish_advanced ]]
+    |> List.flatten()
+
+    process_day(new_fish, iter - 1)
+  end
+
 end
 
 MyScript.laternfish
