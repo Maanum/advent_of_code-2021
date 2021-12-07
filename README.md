@@ -9,3 +9,4 @@ Tracker:
 | 3   | 2 (late) | Excel, Elixir |
 | 4   | 2 (late) | Elixir        |
 | 5   | 2 (late) | Elixir        |
+| 6   | 2        | Elixir        |
