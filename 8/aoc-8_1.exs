@@ -6,7 +6,7 @@ defmodule MyScript do
     {:ok, input} = File.read("input.txt")
     log_data = String.split(input, "\n", trim: true)
     |> Enum.map(fn x ->
-      [ _, tail ] = String.split(x, "|", trim: true)
+      [ head, tail ] = String.split(x, "|", trim: true)
       # { String.split(head, " ", trim: true), String.split(tail, " ", trim: true)}
       String.split(tail, " ", trim: true)
       # tail
