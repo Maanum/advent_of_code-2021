@@ -10,3 +10,6 @@ Tracker:
 | 4   | 2 (late) | Elixir        |
 | 5   | 2 (late) | Elixir        |
 | 6   | 2        | Elixir        |
+| 7   | 2        | Elixir        |
+| 8   | 2        | Elixir        |
+| 9   | 2        | Elixir        |
