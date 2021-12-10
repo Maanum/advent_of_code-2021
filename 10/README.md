@@ -58,7 +58,8 @@ In the above example, an illegal ) was found twice (2\*3 = 6 points), an illegal
 
 Find the first illegal character in each corrupted line of the navigation subsystem. What is the total syntax error score for those errors?
 
---- Part Two ---
+## --- Part Two ---
+
 Now, discard the corrupted lines. The remaining lines are incomplete.
 
 Incomplete lines don't have any incorrect characters - instead, they're missing some closing characters at the end of the line. To repair the navigation subsystem, you just need to figure out the sequence of closing characters that complete all open chunks in the line.
