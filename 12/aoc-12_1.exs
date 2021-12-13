@@ -21,7 +21,7 @@ defmodule MyScript do
     next_node(paths, 0, nodes)
   end
 
-  def next_node([], paths_count, nodes) do
+  def next_node([], paths_count, _) do
     IO.puts paths_count
   end
 
@@ -36,7 +36,7 @@ defmodule MyScript do
     |> Enum.reject(fn x -> x == nil end)
 
     paths_removed_completed = next_path_node |> Enum.reject(fn x -> Enum.member?(x, "end") end)
-    new_paths_count = length(next_path_node) - length(removed_completed)
+    new_paths_count = length(next_path_node) - length(paths_removed_completed)
 
     next_node(paths_removed_completed, paths_count + new_paths_count, nodes)
   end
