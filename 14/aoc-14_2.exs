@@ -17,10 +17,11 @@ defmodule MyScript do
     |> Map.new(fn k -> {k, 0} end)
 
     seeded_count_list = update_count_list(set_list, count_list)
-    process_step(seeded_count_list, rules_list, 0)
+
+    first_element = String.first(template)
+    process_step(seeded_count_list, rules_list, first_element, 0)
   end
 
-  ### Slow
   def update_count_list([], count_list) do
     count_list
   end
@@ -29,34 +30,33 @@ defmodule MyScript do
     update_count_list(tail, Map.put(count_list, head, count_list[head] + 1))
   end
 
-  def process_step(template,_,100) do
-    IO.inspect template
+  def process_step(result,_,first_element, 40) do
+    my_new_map = Enum.reduce(result, %{}, fn {k,v}, acc ->
+      [_, k2] = String.graphemes(k)
+      acc = Map.put_new(acc, k2, 0)
+      Map.put(acc, k2, v + acc[k2])
+    end)
+    counts = Map.put(my_new_map, first_element, my_new_map[first_element] + 1)
+    |> Map.values
+    |> Enum.sort
+
+    result = List.last(counts) - List.first(counts)
+    IO.inspect result
   end
 
-  def process_step(count_list, rules_list, iter) do
-    IO.puts iter
+  def process_step(count_list, rules_list, first_element, iter) do
+    my_new_map = Enum.reduce(count_list, %{}, fn {k,v}, acc ->
+      [ update_val_1,  update_val_2 ] = rules_list[k]
+      acc = Map.put_new(acc, update_val_1, 0)
+      acc = Map.put_new(acc, update_val_2, 0)
+      acc = Map.put(acc, update_val_1, v + acc[update_val_1])
+      Map.put(acc, update_val_2, v + acc[update_val_2])
+    end)
 
-    new_set_list = Enum.map(count_list, fn {k, v} -> List.duplicate(rules_list[k],v) end) |> List.flatten()
-    new_count_list = update_count_list(new_set_list, count_list)
-    process_step(new_count_list, rules_list, iter + 1)
+    process_step(my_new_map, rules_list, first_element, iter + 1)
   end
-  ###
 
-  ### Faster than solution 1, not good enough
-  # def process_step(template,_,100) do
-  #   IO.inspect template
-  # end
 
-  # def process_step(set_list, rules_list, iter) do
-  #   IO.puts iter
-
-  #   add_elements = set_list
-  #   |> Enum.map(fn x -> rules_list[x] end)
-  #   |> List.flatten
-
-  #   process_step(add_elements, rules_list, iter + 1)
-  # end
-  ###
 end
 
 MyScript.polymer
